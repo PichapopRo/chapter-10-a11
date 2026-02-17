@@ -29,5 +29,13 @@ describe("flixtube front end", () => {
         await expect(secondVideo).toHaveAttribute("href", "/video?id=5ea234a5c34230004592eb33"); // Make sure link is correct.
     });
 
-    // Other tests go here.
+    test("can render advertise links", async ({ page }) => {
+        await page.goto("/advertise");
+
+        const cards = page.locator("a[target=\"_blank\"]");
+        await expect(cards).toHaveCount(3);
+        await expect(cards.nth(0)).toHaveAttribute("href", "https://shopee.co.th/");
+        await expect(cards.nth(1)).toHaveAttribute("href", "https://www.lazada.co.th/");
+        await expect(cards.nth(2)).toHaveAttribute("href", "https://www.kaidee.com/");
+    });
 });

@@ -70,6 +70,18 @@ async function main() {
     });
 
     //
+    // Web page to show e-commerce advertisements.
+    //
+    app.get("/advertise", async (req, res) => {
+        const adsResponse = await axios.get("http://advertise/ads");
+        const ads = adsResponse.data.ads.map(ad => ({
+            ...ad,
+            imageProxyUrl: `/api/advertise/image?path=${encodeURIComponent(ad.image)}`,
+        }));
+        res.render("advertise", { ads });
+    });
+
+    //
     // HTTP GET route that streams video to the user's browser.
     //
     app.get("/api/video", async (req, res) => {
@@ -98,6 +110,28 @@ async function main() {
                 "file-name": req.headers["file-name"],
             },
         });
+        response.data.pipe(res);
+    });
+
+    //
+    // HTTP GET route that proxies advertisement images.
+    //
+    app.get("/api/advertise/image", async (req, res) => {
+        const imagePath = req.query.path;
+        if (!imagePath || !imagePath.startsWith("/images/")) {
+            return res.sendStatus(400);
+        }
+
+        const response = await axios({
+            method: "GET",
+            url: `http://advertise${imagePath}`,
+            responseType: "stream",
+        });
+
+        if (response.headers["content-type"]) {
+            res.set("Content-Type", response.headers["content-type"]);
+        }
+
         response.data.pipe(res);
     });
 

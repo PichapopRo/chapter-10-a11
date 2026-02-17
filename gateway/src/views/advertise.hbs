@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>FlixTube: History</title>
+        <title>FlixTube: Advertise</title>
 
         <link rel="stylesheet" href="css/tailwind.min.css">
         <link rel="stylesheet" href="css/app.css">
@@ -21,34 +21,25 @@
                     <div class="ml-4">
                         <a href="/upload">Upload</a>
                     </div>
-                    <div class="ml-4 border-b-2 border-blue-600">
+                    <div class="ml-4">
                         <a href="/history">History</a>
                     </div>
-                    <div class="ml-4">
+                    <div class="ml-4 border-b-2 border-blue-600">
                         <a href="/advertise">Advertise</a>
                     </div>
                 </div>
             </div>
 
             <div class="m-4">
-	            <h1>Viewing history</h1>
-                <div class="m-4">
-                    <table>
-                        <tr>
-                            <th class="border-2 p-1 pl-2 pr-2">Video id</th>
-                            <th class="border-2 p-1 pl-2 pr-2">Date watched</th>
-                        </tr>
-                        {{#each videos}}
-                            <tr class="mt-1">
-                                <td class="border-2 p-1 pl-2 pr-2">
-                                    <a href="/video?id={{this.videoId}}">{{this.videoId}}</a> 
-                                </td>
-                                <td class="border-2 p-1 pl-2 pr-2">
-                                    {{this.watched}}
-                                </td>
-                            </tr>
-                        {{/each}}
-                    </table>
+                <h1>Advertise</h1>
+                <div class="m-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {{#each ads}}
+                        <div class="border-2 rounded-md p-3 bg-white">
+                            <img class="w-full h-auto rounded-sm" src="{{this.imageProxyUrl}}" alt="{{this.name}}">
+                            <div class="mt-2 font-semibold">{{this.name}}</div>
+                            <a class="text-blue-700 underline break-all" href="{{this.url}}" target="_blank" rel="noopener noreferrer">{{this.url}}</a>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
         </div>
